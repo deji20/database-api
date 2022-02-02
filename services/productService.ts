@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { PictureDto } from "../models/models";
-import { ProductQuery, Product } from "../models/Product";
+import { ProductQuery, Product } from "../models/product";
 import { ProductRepository } from "../repositories/productRepository";
 import FileService from "./fileService";
 import Path from "path";

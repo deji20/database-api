@@ -1,7 +1,7 @@
 
 import database from "../MongoDatabase";
 import { Model, Schema } from "mongoose";
-import { ProductSchema, Product, ProductQuery } from "../models/Product";
+import { ProductSchema, Product, ProductQuery } from "../models/product";
 
 export class ProductRepository{
     
@@ -32,7 +32,6 @@ export class ProductRepository{
     }
     async delete(id: string){
         const result = this.products.deleteOne({_id: id});
-        console.log(result);
         return result;
     }
 }
