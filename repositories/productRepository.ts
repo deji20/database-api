@@ -27,11 +27,9 @@ export class ProductRepository{
         return prod;
     }
     async update(id: string, product: Product){
-        const result = this.products.updateOne({_id: id}, product)
-        return result;
+        const result = await this.products.updateOne({_id: id}, product)
     }
     async delete(id: string){
-        const result = this.products.deleteOne({_id: id});
-        return result;
+        const result = await this.products.deleteOne({_id: id});
     }
 }

@@ -21,8 +21,4 @@ export class CategoryRepository{
         let update = await this.categories.create(categories)
         update.map((u) => console.log(u))
     }
-    async delete(id: string){
-        const result = this.categories.deleteOne({_id: id});
-        return result;
-    }
 }
