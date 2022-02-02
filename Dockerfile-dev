@@ -1,0 +1,4 @@
+FROM node
+WORKDIR /database
+
+CMD ["npm", "run", "dev"]
