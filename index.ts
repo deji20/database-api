@@ -18,6 +18,7 @@ connect().then(() => {
     //setting routers
     let productApi = require("./api/productApi");
     let categoryApi = require("./api/categoryApi");
+
     app.use("/product", productApi);
     app.use("/category", categoryApi);
     app.use("/images", express.static("./files/public"));
