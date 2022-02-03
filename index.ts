@@ -1,14 +1,14 @@
 import express from "express";
-import formidable from "express-formidable"
-import {connect} from "./MongoDatabase";
-import cors from "cors";
 import env from "dotenv";
 env.config();
+import {connect} from "./MongoDatabase";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT;
 
 process.env.BASE_DIR = __dirname;
+console.log(process.env.CONNECTION_STRING)
 
 connect().then(() => {
     //setting express middleware
