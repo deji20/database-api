@@ -2,6 +2,7 @@ import mongoose, { Model, Mongoose } from "mongoose";
 import config from "./config";
 
 export async function connect(){
+    console.log(config.databaseConnection);
     mongoose.connect(config.databaseConnection);
 }
 
