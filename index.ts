@@ -12,7 +12,7 @@ console.log(process.env.CONNECTION_STRING)
 
 connect().then(() => {
     //setting express middleware
-    app.use(cors());
+    //app.use(cors());
     app.use(express.json({limit: "10mb"}));
     
     //setting routers
