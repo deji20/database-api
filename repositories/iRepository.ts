@@ -1,6 +1,6 @@
 import {IModel} from "../models/models";
 
-export interface IRepository<Model extends IModel>{
+export interface IRepository<Model>{
     create(model: Model): Promise<boolean>;
     getById(id: string): Promise<Model | null>;
     get(filter: object): Promise<Model[] | null>;

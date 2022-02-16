@@ -4,11 +4,12 @@ env.config();
 import {connect} from "./MongoDatabase";
 import cors from "cors";
 
+import dbQuery from "./api/filters/dbQuery"
+
 const app = express();
 const PORT = process.env.PORT;
 
 process.env.BASE_DIR = __dirname;
-console.log(process.env.CONNECTION_STRING)
 
 connect().then(() => {
     //setting express middleware
@@ -18,9 +19,14 @@ connect().then(() => {
     //setting routers
     let productApi = require("./api/productApi");
     let categoryApi = require("./api/categoryApi");
+    let ticketApi = require("./api/ticketApi");
 
-    app.use("/product", productApi);
     app.use("/category", categoryApi);
+
+    app.use(dbQuery);
+    app.use("/product", productApi);
+    app.use("/ticket", ticketApi);
+
     app.use("/images", express.static("./files/public"));
     app.use("/", express.static("./public"));
     

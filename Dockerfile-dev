@@ -1,4 +1,4 @@
-FROM node
-WORKDIR /database
+FROM node:16.5.0
+WORKDIR /app
 
 CMD ["npm", "run", "dev"]

@@ -2,6 +2,7 @@
 import database from "../MongoDatabase";
 import { Model, Schema } from "mongoose";
 import { ProductSchema, Product, ProductQuery } from "../models/product";
+import { IRepository } from "./iRepository";
 
 export class ProductRepository{
     
