@@ -12,7 +12,9 @@ process.env.BASE_DIR = __dirname;
 
 connect().then(() => {
     //setting express middleware
-    app.use(cors());
+    app.use(cors({
+        origin:["http://indiskehjørne.dk", "http://13.51.224.204"]
+    }));
     app.use(express.json({limit: "10mb"}));
     
     //setting routers
