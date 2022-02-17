@@ -29,7 +29,7 @@ connect().then(() => {
     app.use("/product", productApi);
     app.use("/ticket", ticketApi);
 
-    app.use("/images", express.static("./files/public"));
+    app.use("/images", express.static("./build/files/public"));
     app.use("/", express.static("./public"));
     
     app.listen(config.port, () => {
