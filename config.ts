@@ -1,3 +1,6 @@
+import env from "dotenv";
+env.config();
+
 class config{
     databaseConnection: string;
     paymentAPI: string;
@@ -5,10 +8,10 @@ class config{
     port: number;
 
     constructor(){
-        this.databaseConnection = "mongodb://mongoadmin:secret@database:27017";
-        this.origins = ["http://indiskehjørne.dk", "http://13.51.224.204"];
-        this.port = 80;
-        this.paymentAPI = "https://test.api.dibspayment.eu";
+        this.databaseConnection = process.env.CONNECTION_STRING
+        this.origins = process.env.origins.split(" ");
+        this.port = process.env.PORT;
+        this.paymentAPI = process.env.PAYMENT_API;
     }
 }
 
