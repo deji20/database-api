@@ -1,19 +1,19 @@
 import express from "express";
 import formidable from "express-formidable"
 import {connect} from "./MongoDatabase";
+import config from "./config";
 import cors from "cors";
 import env from "dotenv";
 env.config();
 
 const app = express();
-const PORT = process.env.PORT;
 
 process.env.BASE_DIR = __dirname;
 
 connect().then(() => {
     //setting express middleware
     app.use(cors({
-        origin:["http://indiskehjørne.dk", "http://13.51.224.204"]
+        origin:config.origins
     }));
     app.use(express.json({limit: "10mb"}));
     
@@ -25,7 +25,7 @@ connect().then(() => {
     app.use("/images", express.static("./files/public"));
     app.use("/", express.static("./public"));
     
-    app.listen(PORT, () => {
-        console.log("application started on port:", PORT);
+    app.listen(config.port, () => {
+        console.log("application started on port:", config.port);
     })
 })
