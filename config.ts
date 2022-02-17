@@ -10,7 +10,7 @@ class config{
     constructor(){
         this.databaseConnection = process.env.CONNECTION_STRING
         this.origins = process.env.ORIGINS.split(" ");
-        this.port = process.env.PORT;
+        this.port = parseInt(process.env.PORT);
         this.paymentAPI = process.env.PAYMENT_API;
     }
 }
