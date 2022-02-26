@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
         res.send(tickets);
     }catch(err){
         console.log(err);
-        res.send(err);
+        res.status(400).send(err);
     }
 });
 
@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
         res.send(ticket);
     }catch(err){
         console.log(err);
-        res.send(err);
+        res.status(400).send(err);
     }
 });
 
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
         let ticket = await ticketService.create(req.body);
         res.send(ticket);
     }catch(err){
-        res.send(err);
+        res.status(400).send(err);
     }
 });
 

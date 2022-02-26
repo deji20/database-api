@@ -6,12 +6,14 @@ class config{
     paymentAPI: string;
     origins: string[];
     port: number;
+    imagePath: string;
 
     constructor(){
         this.databaseConnection = process.env.CONNECTION_STRING
         this.origins = process.env.ORIGINS.split(" ");
         this.port = parseInt(process.env.PORT);
         this.paymentAPI = process.env.PAYMENT_API;
+        this.imagePath = process.env.IMAGE_PATH;
     }
 }
 

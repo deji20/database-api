@@ -24,6 +24,7 @@ export default class ProductService{
     }
 
     async getById(id: string): Promise<Product | null>{
+        if(!ObjectId.isValid(id)) throw new Error("invalid id");
         return await this.repository.getById(id);
     }
 

@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
         let product = await productService.getById(req.params.id);
         res.send(product);
     }catch(err){
-        res.send(err);
+        res.status(400).send(err);
     }
 });
 
