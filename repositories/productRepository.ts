@@ -2,7 +2,6 @@
 import database from "../MongoDatabase";
 import { Model, Schema } from "mongoose";
 import { ProductSchema, Product, ProductQuery } from "../models/product";
-import { IRepository } from "./iRepository";
 
 export class ProductRepository{
     
@@ -28,9 +27,9 @@ export class ProductRepository{
         return prod;
     }
     async update(id: string, product: Product){
-        const result = await this.products.updateOne({_id: id}, product)
+        const result = await this.products.findByIdAndUpdate(id, product)
     }
     async delete(id: string){
-        const result = await this.products.deleteOne({_id: id});
+        const result = await this.products.findByIdAndDelete(id);
     }
 }
