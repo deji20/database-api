@@ -21,16 +21,15 @@ connect().then(() => {
     const categoryApi = require("./api/categoryApi");
     const ticketApi = require("./api/ticketApi");
     const paymentApi = require("./api/paymentApi");
+    const orderApi = require("./api/orderApi");
 
-    app.use((req, res, next) => {
-        console.log(req.path, req.query);
-        next();
-    });
-
+    
     app.use("/payment", paymentApi);
     app.use("/category", categoryApi);
 
+    //parses url query string for filter and projections to be used by the procedding api repositories
     app.use(dbQuery);
+    app.use("/order", orderApi);
     app.use("/product", productApi);
     app.use("/ticket", ticketApi);
 

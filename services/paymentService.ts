@@ -5,13 +5,16 @@ import { ProductRepository } from "../repositories/productRepository";
 import FileService from "./fileService";
 import Path from "path";
 import PaymentRepository from "../repositories/paymentRepository";
+import { OrderRepository } from "../repositories/orderRepository";
 
 export default class PaymentService{
     private productRepo: ProductRepository;
     private paymentRepo: PaymentRepository;
+    private orderRepo: OrderRepository;
 
     constructor(){
-        this.productRepo = new ProductRepository()
+        this.orderRepo = new OrderRepository();
+        this.productRepo = new ProductRepository();
         this.paymentRepo = new PaymentRepository();
     }
 
