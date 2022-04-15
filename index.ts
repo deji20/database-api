@@ -13,7 +13,7 @@ process.env.BASE_DIR = __dirname;
 
 connect().then(() => {
     //setting express middleware
-    app.use(cors({origin:config.origins}));
+    //app.use(cors({origin:config.origins}));  //I Need to configure cors origins more specifically at different middleware levels
     app.use(express.json({limit: "10mb"}));
     
     //setting routers
