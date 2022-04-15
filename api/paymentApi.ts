@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import config from "../config";
+import { Order } from "../models/order";
 import PaymentRepository from "../repositories/paymentRepository";
 import PaymentService from "../services/paymentService";
 
@@ -17,9 +18,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try{
+        
         let result = await paymentService.create(req.body);
-        res.send({paymentId:result, checkoutId:config.payment.checkout})
+        //res.send({paymentId:result, checkoutId:config.payment.checkout})
     }catch(err){
+        console.log(err);
         res.send(err);
     }
 });

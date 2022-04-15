@@ -6,6 +6,7 @@ import FileService from "./fileService";
 import Path from "path";
 import PaymentRepository from "../repositories/paymentRepository";
 import { OrderRepository } from "../repositories/orderRepository";
+import { Order } from "../models/order";
 
 export default class PaymentService{
     private productRepo: ProductRepository;
@@ -27,10 +28,10 @@ export default class PaymentService{
         
     }
 
-    async create(productIds: string[]){
+    async create(order: {products: {id: string, amount: number}[]}){
         const products = await this.productRepo.get({
             filter:{ 
-                _id: { $in: productIds}
+                _id: { $in: order.products.map((line) => {line.id})}
             }
         } as ProductQuery)
 

@@ -26,13 +26,13 @@ export default class PaymentRepository{
     async get(){
     }
 
-    async post(products: Product[]){
+    async post(products: Product[], options?: any){
         //transform products into nets parsable items
         const items = products.map((product) => {
             return {
                 reference: product.name,
                 name: product.name,
-                quantity: 0,
+                quantity: 1,
                 unit: "Pcs",
                 unitPrice: 100,
                 taxRate: 10,
@@ -43,17 +43,24 @@ export default class PaymentRepository{
         });
 
         //create order
-        const order = 
-        {
+        const order = {
             items: items,
             amount: items.map(item => item.netTotalAmount).reduce((prev, cur) =>  prev += cur),
             currency: "DKK",
             reference: "string"
         }
-        console.log(order);
+        //set up NETS checkout options  
         const checkout = {
             url: "http://localhost/cart",
-            termsUrl: "http://localhost/hypothetical"
+            termsUrl: "http://localhost/hypothetical",
+            consumer: {
+                privatePerson: {
+                    firstName: "Deji", 
+                    lastName: "Ehinlanwo"
+                },
+                email: "ehinlanwo.deji@gmail.com",
+            },
+            ...options
         }
 
         try{
