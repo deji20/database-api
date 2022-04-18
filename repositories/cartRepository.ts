@@ -23,8 +23,8 @@ export class CartRepository{
 
     async update(id: string, cart: Cart){
         cart._id = id;
-        let result = await this.carts.findOneAndReplace<Cart>(cart);
-        console.log(result);
+        await this.carts.findByIdAndUpdate<Cart>(id, cart);
+        console.log(cart);
         return cart;
     }
 }
