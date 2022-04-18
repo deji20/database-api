@@ -19,6 +19,7 @@ connect().then(() => {
     //setting routers
     const productApi = require("./api/productApi");
     const categoryApi = require("./api/categoryApi");
+    const cartApi = require("./api/cartApi");
     const ticketApi = require("./api/ticketApi");
     const paymentApi = require("./api/paymentApi");
     const orderApi = require("./api/orderApi");
@@ -26,7 +27,8 @@ connect().then(() => {
     
     app.use("/payment", paymentApi);
     app.use("/category", categoryApi);
-
+    app.use("/cart", cartApi);
+    
     //parses url query string for filter and projections to be used by the procedding api repositories
     app.use(dbQuery);
     app.use("/order", orderApi);
