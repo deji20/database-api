@@ -51,8 +51,8 @@ export default class PaymentRepository{
         }
         //set up NETS checkout options  
         const checkout = {
-            url: "http://localhost/cart",
-            termsUrl: "http://localhost/hypothetical",
+            url: "http://indiskehjørne.dk/cart",
+            termsUrl: "http://indiskehjørne.dk/hypothetical",
             consumer: {
                 privatePerson: {
                     firstName: "Deji", 
