@@ -12,7 +12,11 @@ export class CartRepository{
     }
 
     async getById(cartId: string){
-        return await this.carts.findById<Cart>(cartId);
+        try{
+            return await this.carts.findById<Cart>(cartId);
+        }catch{
+            return null;
+        }
     }
 
     async create(){
