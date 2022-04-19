@@ -9,7 +9,6 @@ let cartService: CartService = new CartService();
 router.get("/:id", async (req, res) => {
     try{
         const cart = await cartService.get(req.params.id);
-        console.log(cart);
         res.send(cart);
     }catch(err){
         res.send(err);
