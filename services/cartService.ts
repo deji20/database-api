@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { Cart } from "../models/cart";
 import { CartRepository } from "../repositories/cartRepository";
 
@@ -9,6 +10,7 @@ export default class CartService{
     }
 
     async get(cartId: string): Promise<Cart | null>{
+        if(!ObjectId.isValid(cartId)) throw new Error("invalid id");
         let result = await this.repository.getById(cartId);
         if(!result) result = await this.repository.create()
         return result

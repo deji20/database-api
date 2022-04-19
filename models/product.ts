@@ -2,6 +2,7 @@ import { Schema } from "mongoose";
 import { Query } from "./models";
 
 export interface Product{
+    _id: string,
     price: number,
     name: string,
     categories: string[],

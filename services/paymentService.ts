@@ -7,14 +7,16 @@ import Path from "path";
 import PaymentRepository from "../repositories/paymentRepository";
 import { OrderRepository } from "../repositories/orderRepository";
 import { Order } from "../models/order";
+import { CartRepository } from "../repositories/cartRepository";
+import { Cart } from "../models/cart";
 
 export default class PaymentService{
     private productRepo: ProductRepository;
     private paymentRepo: PaymentRepository;
-    private orderRepo: OrderRepository;
+    private cartRepo: CartRepository;
 
     constructor(){
-        this.orderRepo = new OrderRepository();
+        this.cartRepo = new CartRepository();
         this.productRepo = new ProductRepository();
         this.paymentRepo = new PaymentRepository();
     }
@@ -28,13 +30,13 @@ export default class PaymentService{
         
     }
 
-    async create(order: {products: {id: string, amount: number}[]}){
+    async create(cartId: string){
+        const cart: Cart = await this.cartRepo.getById(cartId);
         const products = await this.productRepo.get({
             filter:{ 
-                _id: { $in: order.products.map((line) => {line.id})}
+                _id: { $in: cart.products.map((line) => line.id)}
             }
         } as ProductQuery)
-
         const paymentId = await this.paymentRepo.post(products);
         return paymentId;
     }

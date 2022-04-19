@@ -15,7 +15,12 @@ class config{
         this.payment = {
             endpoint: process.env.PAYMENT_API,
             secret: process.env.PAYMENT_SECRET,
-            checkout: process.env.PAYMENT_CHECKOUT,
+            checkoutId: process.env.PAYMENT_CHECKOUT,
+            checkoutOptions: {
+                url: process.env.PAYMENT_CHECKOUT_URL,
+                termsUrl: process.env.PAYMENT_CHECKOUT_TERMS,
+            }
+
         };
         this.imagePath = process.env.IMAGE_PATH;
     }
@@ -24,7 +29,11 @@ class config{
 interface PaymentConfig{
     endpoint: string;
     secret: string;
-    checkout: string;
+    checkoutId: string;
+    checkoutOptions: {
+        url: string,
+        termsUrl: string,
+    };
 }
 
 export default new config()
