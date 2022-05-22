@@ -7,11 +7,13 @@ export interface Order{
     customer?: Customer,
     paymentId: string,
     created?: Date,
-    products: {
-        product: Product,
-        amount: number,
-    }[],
+    products: OrderLine[],
     status: OrderStatus,
+}
+
+export interface OrderLine{
+    product: Product,
+    amount: number,
 }
 
 export enum OrderStatus{

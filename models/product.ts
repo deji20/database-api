@@ -18,6 +18,10 @@ export interface Product{
             mime: string,
         }[],
         description: string,
+        attributes: {
+            name: string,
+            value: string,
+        }[],
         amount: number,
     }[]
 }
@@ -38,6 +42,10 @@ export const ProductSchema = new Schema({
             mime: String,
         }],
         description: String,
+        attributes: [{
+            name: String,
+            value: String,
+        }],
         amount: Number,
     }]
 })

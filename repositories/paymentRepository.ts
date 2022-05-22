@@ -5,6 +5,7 @@ import { Category, CategorySchema } from "../models/category";
 import config from "../config";
 import axios, { AxiosInstance } from "axios";
 import { Product } from "../models/product";
+import { OrderLine } from "../models/order";
 
 
 export default class PaymentRepository{
@@ -26,29 +27,30 @@ export default class PaymentRepository{
     async get(){
     }
 
-    async post(products: Product[], options?: any){
+    async post(orderLines: OrderLine[], options?: any){
         //transform products into nets parsable items
-        const items = products.map((product) => {
+        const items = orderLines.map((line) => {
+            const taxRate = 2000;
             return {
-                reference: product.name,
-                name: product.name,
-                quantity: 1,
+                reference: line.product.name,
+                name: line.product.name,
+                quantity: line.amount,
                 unit: "Pcs",
-                unitPrice: 100,
-                taxRate: 10,
-                taxAmount: 10,
-                grossTotalAmount: 100,
-                netTotalAmount: 100
+                unitPrice: line.product.price,
+                taxRate: taxRate,
+                taxAmount: (line.product.price * line.amount * taxRate / 10000),
+                grossTotalAmount: (line.product.price * line.amount) + (line.product.price * line.amount * taxRate / 10000),
+                netTotalAmount: line.product.price * line.amount,
             }
         });
 
         //create order
         const order = {
             items: items,
-            amount: items.map(item => item.netTotalAmount).reduce((prev, cur) =>  prev += cur),
-            currency: "DKK",
-            reference: "string"
-        }
+            amount: items.reduce<number>((prev, cur) =>  cur.grossTotalAmount += prev , 0),
+            currency: "DKK"
+        };
+        console.log(order);
         //set up NETS checkout options  
         const checkout = {
             url: config.payment.checkoutOptions.url,
@@ -61,6 +63,10 @@ export default class PaymentRepository{
                 email: "ehinlanwo.deji@gmail.com",
             },
             ...options
+        }
+        //set up the webhooks that will catch the order being payed
+        const notifications = {
+            
         }
 
         try{

@@ -6,7 +6,7 @@ import FileService from "./fileService";
 import Path from "path";
 import PaymentRepository from "../repositories/paymentRepository";
 import { OrderRepository } from "../repositories/orderRepository";
-import { Order } from "../models/order";
+import { Order, OrderLine } from "../models/order";
 import { CartRepository } from "../repositories/cartRepository";
 import { Cart } from "../models/cart";
 
@@ -37,7 +37,10 @@ export default class PaymentService{
                 _id: { $in: cart.products.map((line) => line.id)}
             }
         } as ProductQuery)
-        const paymentId = await this.paymentRepo.post(products);
+        const orderLines: OrderLine[] = cart.products.map((prod) => {
+            return {amount: prod.amount, product: products.find((p) => p.id == prod.id)}
+        });
+        const paymentId = await this.paymentRepo.post(orderLines);
         return paymentId;
     }
 

@@ -31,7 +31,7 @@ export default class OrderService{
             }
         } as ProductQuery)
 
-        const paymentId = await this.paymentRepo.post(products);
+        const paymentId = ""// await this.paymentRepo.post(products);
         return paymentId;
     }
     async update(id: string, order: Order): Promise<Order>{
