@@ -16,6 +16,7 @@ class config{
             endpoint: process.env.PAYMENT_API,
             secret: process.env.PAYMENT_SECRET,
             checkoutId: process.env.PAYMENT_CHECKOUT,
+            webhookUrl: process.env.PAYMENT_WEBHOOK_URL,
             checkoutOptions: {
                 url: process.env.PAYMENT_CHECKOUT_URL,
                 termsUrl: process.env.PAYMENT_CHECKOUT_TERMS,
@@ -30,6 +31,7 @@ interface PaymentConfig{
     endpoint: string;
     secret: string;
     checkoutId: string;
+    webhookUrl: string;
     checkoutOptions: {
         url: string,
         termsUrl: string,

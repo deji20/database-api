@@ -55,23 +55,38 @@ export default class PaymentRepository{
         const checkout = {
             url: config.payment.checkoutOptions.url,
             termsUrl: config.payment.checkoutOptions.termsUrl,
-            consumer: {
-                privatePerson: {
-                    firstName: "Deji", 
-                    lastName: "Ehinlanwo"
-                },
-                email: "ehinlanwo.deji@gmail.com",
-            },
+            charge: true,
             ...options
         }
         //set up the webhooks that will catch the order being payed
         const notifications = {
-            
+            webHooks:[
+                {
+                    eventName: "payment.charge.created.v2",
+                    url: config.payment.webhookUrl,
+                    authorization:"12345abcd"
+                },
+                {
+                    eventName: "payment.created",
+                    url: config.payment.webhookUrl,
+                    authorization:"12345abcd"
+                },
+                {
+                    eventName: "payment.checkout.completed",
+                    url: config.payment.webhookUrl,
+                    authorization:"12345abcd"
+                },
+                {
+                    eventName: "payment.reservation.created.v2",
+                    url: config.payment.webhookUrl,
+                    authorization:"12345abcd"
+                }
+            ]
         }
 
         try{
-            const paymentId = await this.api.post("/v1/payments", {checkout, order});
-            return paymentId.data.paymentId
+            const response = await this.api.post("/v1/payments", {checkout, order, notifications});
+            return response.data.paymentId
         }catch(err){
             console.log(err.response.status, err.response.data);
             console.log("error in payment")
