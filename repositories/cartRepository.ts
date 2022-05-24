@@ -28,7 +28,6 @@ export class CartRepository{
     async update(id: string, cart: Cart){
         cart._id = id;
         await this.carts.findByIdAndUpdate<Cart>(id, cart);
-        console.log(cart);
         return cart;
     }
 }

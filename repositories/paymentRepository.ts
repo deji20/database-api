@@ -76,6 +76,7 @@ export default class PaymentRepository{
 
         try{
             const response = await this.api.post("/v1/payments", {checkout, order, notifications});
+            console.log(response);
             return response.data.paymentId
         }catch(err){
             console.log(err.response.status, err.response.data);
