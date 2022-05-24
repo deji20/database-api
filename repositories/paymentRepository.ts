@@ -59,6 +59,7 @@ export default class PaymentRepository{
             ...options
         }
         //set up the webhooks that will catch the order being payed
+        console.log(config.payment.webhookUrl);
         const notifications = {
             webHooks:[
                 {
