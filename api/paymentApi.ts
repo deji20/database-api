@@ -17,8 +17,9 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/confirm", async (req, res) => {
-    console.log(req.body);
-    console.log(JSON.stringify(req.body.data))
+    const paymentId = req.body.data.paymentId;
+    console.log("paymentId", paymentId)
+    paymentService.confirmPayment(paymentId);
     res.status(200).send();
 })
 

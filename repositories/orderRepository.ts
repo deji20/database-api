@@ -12,15 +12,15 @@ export class OrderRepository{
     }
 
     async create(order: Order){
-        return this.orders.create(order);
+        return await this.orders.create(order);
     }
 
     async getById(id: string){
-        return this.orders.findById(id);
+        return await this.orders.findById(id);
     }
 
     async get(){
-        return this.orders.find();
+        return await this.orders.find();
     }
 
     async delete(id: string){

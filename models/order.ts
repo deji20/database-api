@@ -1,4 +1,4 @@
-import { Date, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import { Customer, CustomerSchema } from "./customer";
 import { Query } from "./models";
 import { Product, ProductSchema } from "./product";
