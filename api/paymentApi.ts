@@ -16,6 +16,11 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.post("/confirm", async (req, res) => {
+    console.log(req.body);
+    res.status(200).send();
+})
+
 router.post("/", async (req, res) => {
     try{
         let result = await paymentService.create(req.body.id);
