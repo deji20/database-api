@@ -40,7 +40,7 @@ export default class PaymentService{
         const orderLines: OrderLine[] = cart.products.map((prod) => {
             return {amount: prod.amount, product: products.find((p) => p.id == prod.id)}
         });
-        const paymentId = await this.paymentRepo.post(orderLines);
+        const paymentId = await this.paymentRepo.create(orderLines);
         return paymentId;
     }
 

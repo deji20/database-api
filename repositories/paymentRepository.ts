@@ -27,7 +27,7 @@ export default class PaymentRepository{
     async get(){
     }
 
-    async post(orderLines: OrderLine[], options?: any){
+    async create(orderLines: OrderLine[], options?: any){
         //transform products into nets parsable items
         const items = orderLines.map((line) => {
             const taxRate = 2000;
@@ -70,7 +70,7 @@ export default class PaymentRepository{
                     eventName: "payment.checkout.completed",
                     url: config.payment.webhookUrl,
                     authorization:"12345abcd"
-                },
+                }
             ]
         }
 
