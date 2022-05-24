@@ -18,6 +18,7 @@ router.get("/", async (req, res) => {
 
 router.post("/confirm", async (req, res) => {
     console.log(req.body);
+    console.log(JSON.stringify(req.body.data))
     res.status(200).send();
 })
 

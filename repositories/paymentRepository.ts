@@ -67,20 +67,10 @@ export default class PaymentRepository{
                     authorization:"12345abcd"
                 },
                 {
-                    eventName: "payment.created",
-                    url: config.payment.webhookUrl,
-                    authorization:"12345abcd"
-                },
-                {
                     eventName: "payment.checkout.completed",
                     url: config.payment.webhookUrl,
                     authorization:"12345abcd"
                 },
-                {
-                    eventName: "payment.reservation.created.v2",
-                    url: config.payment.webhookUrl,
-                    authorization:"12345abcd"
-                }
             ]
         }
 
