@@ -59,7 +59,6 @@ export default class PaymentRepository{
             ...options
         }
         //set up the webhooks that will catch the order being payed
-        console.log(config.payment.webhookUrl);
         const notifications = {
             webHooks:[
                 {
@@ -77,7 +76,6 @@ export default class PaymentRepository{
 
         try{
             const response = await this.api.post("/v1/payments", {checkout, order, notifications});
-            console.log(response);
             return response.data.paymentId
         }catch(err){
             console.log(err.response.status, err.response.data);

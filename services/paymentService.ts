@@ -50,7 +50,7 @@ export default class PaymentService{
         const orderLines: OrderLine[] = cart.products.map((prod) => {
             return {amount: prod.amount, product: products.find((p) => p.id == prod.id)}
         });
-        
+
         //requesting a payment id from nets payment repository
         const paymentId = await this.paymentRepo.create(orderLines);
         

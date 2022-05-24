@@ -26,7 +26,7 @@ export const OrderSchema = new Schema({
     customer: CustomerSchema,
     paymentId: String,
     created: Date,
-    Products: [{
+    products: [{
         product: ProductSchema,
         amount: Number,
     }],
