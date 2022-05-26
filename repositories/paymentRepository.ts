@@ -47,7 +47,7 @@ export default class PaymentRepository{
         //create order lines
         const orderLines = {
             items: items,
-            amount: items.reduce<number>((prev, cur) =>  cur.grossTotalAmount += prev , 0),
+            amount: items.reduce<number>((prev, cur) =>  prev += cur.grossTotalAmount, 0),
             currency: "DKK"
         };
         //set up NETS checkout options  
