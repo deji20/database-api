@@ -5,7 +5,7 @@ import { Product, ProductSchema } from "./product";
 
 export interface Order{
     customer?: Customer,
-    paymentId: string,
+    paymentId?: string,
     created?: Date,
     products: OrderLine[],
     status: OrderStatus,
@@ -17,8 +17,9 @@ export interface OrderLine{
 }
 
 export enum OrderStatus{
-    NEW = "NEW",
-    PAYED = "PAYED"
+    NEW = "new",
+    PAYED = "payed",
+    SHIPPED = "shipped"
 
 }
 

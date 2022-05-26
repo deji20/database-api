@@ -25,7 +25,8 @@ router.post("/confirm", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try{
-        let result = await paymentService.create(req.body.id);
+        console.log(req.body)
+        let result = await paymentService.create(req.body.id, req.body.customer);
         res.send({paymentId:result, checkoutId:config.payment.checkoutId})
     }catch(err){
         console.log(err);

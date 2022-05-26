@@ -5,7 +5,7 @@ import { Category, CategorySchema } from "../models/category";
 import config from "../config";
 import axios, { AxiosInstance } from "axios";
 import { Product } from "../models/product";
-import { OrderLine } from "../models/order";
+import { Order, OrderLine } from "../models/order";
 
 
 export default class PaymentRepository{
@@ -27,9 +27,9 @@ export default class PaymentRepository{
     async get(){
     }
 
-    async create(orderLines: OrderLine[], options?: any){
+    async create(order: Order, options?: any){
         //transform products into nets parsable items
-        const items = orderLines.map((line) => {
+        const items = order.products.map((line) => {
             const taxRate = 2000;
             return {
                 reference: line.product.name,
@@ -44,17 +44,18 @@ export default class PaymentRepository{
             }
         });
 
-        //create order
-        const order = {
+        //create order lines
+        const orderLines = {
             items: items,
             amount: items.reduce<number>((prev, cur) =>  cur.grossTotalAmount += prev , 0),
             currency: "DKK"
         };
-        console.log(order);
         //set up NETS checkout options  
         const checkout = {
             url: config.payment.checkoutOptions.url,
             termsUrl: config.payment.checkoutOptions.termsUrl,
+            consumer: order.customer,
+            merchantHandlesConsumerData: true,
             charge: true,
             ...options
         }
@@ -75,7 +76,7 @@ export default class PaymentRepository{
         }
 
         try{
-            const response = await this.api.post("/v1/payments", {checkout, order, notifications});
+            const response = await this.api.post("/v1/payments", {checkout, order: orderLines, notifications});
             return response.data.paymentId
         }catch(err){
             console.log(err.response.status, err.response.data);

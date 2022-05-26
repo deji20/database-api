@@ -28,6 +28,7 @@ export class OrderRepository{
     }
 
     async update(id: string, order: Order){
+        console.log(order);
         this.orders.findByIdAndUpdate(id, order);
     }
 }

@@ -9,6 +9,7 @@ import { OrderRepository } from "../repositories/orderRepository";
 import { Order, OrderLine, OrderStatus } from "../models/order";
 import { CartRepository } from "../repositories/cartRepository";
 import { Cart } from "../models/cart";
+import { Customer } from "../models/customer";
 
 export default class PaymentService{
     private productRepo: ProductRepository;
@@ -38,7 +39,7 @@ export default class PaymentService{
     }
 
     //returns a payment id used by the frontend for checkout and payment
-    async create(cartId: string){
+    async create(cartId: string, customer: Customer){
         const cart: Cart = await this.cartRepo.getById(cartId);
         const products = await this.productRepo.get({
             filter:{ 
@@ -46,23 +47,24 @@ export default class PaymentService{
             }
         } as ProductQuery)
         
+        
+        const order = {
+            products: cart.products.map((prod) => ({amount: prod.amount, product: products.find((p) => p.id == prod.id)})),
+            created: new Date(),
+            customer: customer,
+            status: OrderStatus.NEW,
+        } as Order
         //expand the customers cart into an orderline with expanded product information
-        const orderLines: OrderLine[] = cart.products.map((prod) => {
-            return {amount: prod.amount, product: products.find((p) => p.id == prod.id)}
-        });
+
 
         //requesting a payment id from nets payment repository
-        const paymentId = await this.paymentRepo.create(orderLines);
-        
-        //saving the paymentId and products as a new order to be confirmed by the confirmPayment method
-        this.orderRepo.create({
-            paymentId: paymentId,
-            products: orderLines,
-            created: new Date(),
-            status: OrderStatus.NEW,
-        } as Order)
+        //saving the paymentId and products to the order to be confirmed by the confirmPayment method
+        order.paymentId = await this.paymentRepo.create(order);
 
-        return paymentId;
+        //saving the newly created order
+        order.paymentId && this.orderRepo.create(order);
+
+        return order.paymentId;
     }
 
 }

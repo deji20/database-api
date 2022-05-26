@@ -2,21 +2,50 @@ import { Schema } from "mongoose";
 import { Query } from "./models";
 
 export interface Customer{
-    firstName: string,
-    lastName: string,
-    address: string,
-    city: string,
-    postCode: string,
+    privatePerson: Person,
     email: string,
-    phone: string
+    shippingAddress: Address,
+    phone: PhoneNumber
 }
 
-export const CustomerSchema = new Schema({
-    firstName: String,
-    lastName: String,
-    address: String,
+export interface Person{
+    firstName: string
+    lastName: string;
+}
+
+export interface Address{
+    addressLine1: string,
+    addressLine2: string,
+    city: string,
+    postalCode: string,
+    country: string,
+}
+
+export interface PhoneNumber{
+    prefix: string,
+    number: string
+}
+
+
+const AddressSchema = new Schema({
+    addressLine1: String,
+    addressLine2: String,
     city: String,
-    postCode: String,
+    postalCode: String,
+    country: String,
+})
+const PhoneNumberSchema = new Schema({
+    prefix: String,
+    number: String
+})
+const PersonSchema = new Schema({
+    firstName: String,
+    lastName: String
+})
+
+export const CustomerSchema = new Schema({
     email: String,
-    phone: String
+    privatePerson: PersonSchema,
+    shippingAddress: AddressSchema,
+    phone: PhoneNumberSchema
 })
