@@ -20,15 +20,18 @@ export class OrderRepository{
     }
 
     async get(){
-        return await this.orders.find();
+        let result = await this.orders.find();
+        console.log(result);
+        return result;
     }
 
     async delete(id: string){
-        this.orders.findByIdAndDelete(id);
+        await this.orders.findByIdAndDelete(id);
     }
 
     async update(id: string, order: Order){
-        console.log(order);
-        this.orders.findByIdAndUpdate(id, order);
+        const result = await this.orders.findByIdAndUpdate(id, order);
+        result.save()
+        return result.toObject();
     }
 }

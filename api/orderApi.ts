@@ -32,13 +32,4 @@ router.delete("/:id", async (req, res) => {
     res.status(204).send()
 })
 
-router.post("/", async (req, res) => {
-    try{
-        const order = await orderService.create(req.body);
-        res.send(order);
-    }catch(err){
-        res.status(400).send(err);
-    }
-});
-
 module.exports = router;

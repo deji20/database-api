@@ -32,9 +32,18 @@ export default class PaymentService{
     async confirmPayment(paymentId: string){
         const results = await this.orderRepo.get();
         const order = results.find((o) => o.paymentId == paymentId);
-        if(order){
+        // if order is found and order status is new 
+        // update order status and track product inventory
+
+        if(order && order.status == OrderStatus.NEW){
             order.status = OrderStatus.PAYED;
-            this.orderRepo.update(order.id, order);
+            order.products
+            order.products.forEach(async productLine => {
+                const product = await this.productRepo.getById(productLine.product._id)
+                product.version[0].amount -= productLine.amount;
+                await this.productRepo.update(productLine.product._id, product);
+            });
+            await this.orderRepo.update(order.id, order)
         }
     }
 

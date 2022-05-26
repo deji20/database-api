@@ -1,7 +1,4 @@
 import express, { Router } from "express";
-import { PictureDto } from "../models/models";
-import { Product, ProductQuery } from "../models/product";
-import { ProductRepository } from "../repositories/productRepository";
 import ProductService from "../services/productService";
 
 let router = express.Router();
