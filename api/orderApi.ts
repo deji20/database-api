@@ -21,7 +21,6 @@ router.get("/:id", async (req, res) => {
         const order = await orderService.getById(req.params.id);
         res.send(order);
     }catch(err){
-        console.log(err);
         res.status(400).send(err);
     }
 });

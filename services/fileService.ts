@@ -27,6 +27,6 @@ export default class FileService{
         }else{
             throw "mime type not found"
         }
-        return `/api/images/${this.folder}/${id.toString()}.${mime.extension(mimetype)}`;
+        return `/images/${this.folder}/${id.toString()}.${mime.extension(mimetype)}`;
     }
 }

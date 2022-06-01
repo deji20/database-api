@@ -21,7 +21,6 @@ export class OrderRepository{
 
     async get(){
         let result = await this.orders.find();
-        console.log(result);
         return result;
     }
 
