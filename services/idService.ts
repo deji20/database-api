@@ -19,7 +19,7 @@ class IdService{
         }else{
             let id = await this.idRepo.create({table: table} as Id)
         }
-        return `${options.prefix || ""}${id.position}${options.postfix || ""}`;
+        return `${options?.prefix || ""}${id.position}${options?.postfix || ""}`;
     }
 }
 
