@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { PictureDto } from "../models/models";
 import { ProductQuery, Product } from "../models/product";
 import { ProductRepository } from "../repositories/productRepository";
+import IdService from "./idService";
 import FileService from "./fileService";
 import Path from "path";
 
@@ -24,7 +25,6 @@ export default class ProductService{
     }
 
     async getById(id: string): Promise<Product | null>{
-        if(!ObjectId.isValid(id)) throw new Error("invalid id");
         return await this.repository.getById(id);
     }
 
@@ -36,6 +36,10 @@ export default class ProductService{
                     verPic.path = this.fileService.create(verPic.path as unknown as string, verPic.mime)
                 }
             })
+        });
+
+        product.id = await IdService.increment("product", {
+            prefix: product.name.split(" ").reduce((prev, cur) => prev += cur[0], "")
         });
         return await this.repository.create(product);
     }

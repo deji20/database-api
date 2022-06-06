@@ -2,6 +2,7 @@ import { Schema } from "mongoose";
 import { Query } from "./models";
 
 export interface Ticket{
+    id: string,
     email: string,
     name: string,
     type: string,
@@ -18,6 +19,7 @@ export enum TicketStatus{
 }
 
 export const TicketSchema = new Schema({
+    id: String,
     email: String,
     name: String,
     type: String,

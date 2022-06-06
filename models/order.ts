@@ -4,6 +4,7 @@ import { Query } from "./models";
 import { Product, ProductSchema } from "./product";
 
 export interface Order{
+    id?: string;
     customer?: Customer,
     paymentId?: string,
     created?: Date,
@@ -24,6 +25,7 @@ export enum OrderStatus{
 }
 
 export const OrderSchema = new Schema({
+    id: Number,
     customer: CustomerSchema,
     paymentId: String,
     created: Date,

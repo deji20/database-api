@@ -12,7 +12,7 @@ export class ProductRepository{
     }
 
     async getById(id: string){
-        return (await this.products.findById(id)).toObject();
+        return (await this.products.findOne({id: id})).toObject();
     }
     async getCategories(query: ProductQuery){
         return this.products.distinct("categories", query.search);
@@ -27,10 +27,10 @@ export class ProductRepository{
         return prod.toObject();
     }
     async update(id: string, product: Product){
-        const result = await this.products.findByIdAndUpdate(id, product)
+        const result = await this.products.findOneAndUpdate({id: id}, product)
         return result.toObject();
     }
     async delete(id: string){
-        const result = await this.products.findByIdAndDelete(id);
+        const result = await this.products.findOneAndDelete({id: id});
     }
 }

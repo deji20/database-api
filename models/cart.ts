@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { Query } from "./models";
 
 export interface Cart{
-    _id?: string,
+    id?: string,
     products: {
         id: string,
         amount: number
@@ -10,6 +10,7 @@ export interface Cart{
 }
 
 export const CartSchema = new Schema({
+    id: String,
     products: [{
         id: String,
         amount: Number

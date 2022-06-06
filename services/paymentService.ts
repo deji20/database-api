@@ -10,6 +10,7 @@ import { Order, OrderLine, OrderStatus } from "../models/order";
 import { CartRepository } from "../repositories/cartRepository";
 import { Cart } from "../models/cart";
 import { Customer } from "../models/customer";
+import IdService from "./idService";
 
 export default class PaymentService{
     private productRepo: ProductRepository;
@@ -39,9 +40,9 @@ export default class PaymentService{
             order.status = OrderStatus.PAYED;
             order.products
             order.products.forEach(async productLine => {
-                const product = await this.productRepo.getById(productLine.product._id)
+                const product = await this.productRepo.getById(productLine.product.id)
                 product.version[0].amount -= productLine.amount;
-                await this.productRepo.update(productLine.product._id, product);
+                await this.productRepo.update(productLine.product.id, product);
             });
             await this.orderRepo.update(order.id, order)
         }
@@ -52,12 +53,13 @@ export default class PaymentService{
         const cart: Cart = await this.cartRepo.getById(cartId);
         const products = await this.productRepo.get({
             filter:{ 
-                _id: { $in: cart.products.map((line) => line.id)}
+                id: { $in: cart.products.map((line) => line.id)}
             }
         } as ProductQuery)
         
         
         const order = {
+            id: await IdService.increment("order"),
             products: cart.products.map((prod) => ({amount: prod.amount, product: products.find((p) => p.id == prod.id)})),
             created: new Date(),
             customer: customer,

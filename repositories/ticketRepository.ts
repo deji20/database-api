@@ -13,7 +13,7 @@ export class TicketRepository{
     }
 
     async getById(id: string){
-        return await this.tickets.findById(id);
+        return await this.tickets.findOne({id: id});
     }
     
     async get(query?: Query){
@@ -24,13 +24,12 @@ export class TicketRepository{
 
     async create(ticket: Ticket){
         let tick = await this.tickets.create(ticket);
-        console.log(tick)
         return tick;
     }
     async update(id: string, ticket: Ticket){
-        const result = await this.tickets.updateOne({_id: id}, ticket)
+        const result = await this.tickets.updateOne({id: id}, ticket)
     }
     async delete(id: string){
-        const result = await this.tickets.deleteOne({_id: id});
+        const result = await this.tickets.deleteOne({id: id});
     }
 }

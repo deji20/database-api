@@ -2,6 +2,7 @@
 import database from "../MongoDatabase";
 import { Model, Schema } from "mongoose";
 import { Cart, CartSchema } from "../models/cart";
+import idService from "../services/idService";
 
 export class CartRepository{
     
@@ -13,7 +14,7 @@ export class CartRepository{
 
     async getById(cartId: string){
         try{
-            return await this.carts.findById<Cart>(cartId);
+            return await this.carts.findOne<Cart>({id: cartId});
         }catch{
             return null;
         }
@@ -21,13 +22,14 @@ export class CartRepository{
 
     async create(){
         let newCart: Cart = {products: []};
+        newCart.id = await idService.increment("cart")
         newCart = await this.carts.create<Cart>(newCart);
         return newCart;
     }
 
     async update(id: string, cart: Cart){
-        cart._id = id;
-        await this.carts.findByIdAndUpdate<Cart>(id, cart);
+        cart.id = id;
+        await this.carts.findOneAndUpdate<Cart>({id: id}, cart);
         return cart;
     }
 }

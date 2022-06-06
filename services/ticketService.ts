@@ -1,6 +1,7 @@
 import { Query } from "../models/models";
 import { Ticket, TicketStatus } from "../models/ticket";
 import { TicketRepository } from "../repositories/ticketRepository";
+import IdService from "./idService";
 
 export default class TicketService{
     private repository: TicketRepository;
@@ -19,6 +20,7 @@ export default class TicketService{
 
     async create(ticket: Ticket): Promise<Ticket>{
         ticket.status = TicketStatus.New
+        ticket.id = await IdService.increment("ticket", {prefix: ticket.type[0]})
         return await this.repository.create(ticket);
     }
 

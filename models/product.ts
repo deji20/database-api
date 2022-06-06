@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { Query } from "./models";
 
 export interface Product{
-    _id: string,
+    id?: string,
     price: number,
     name: string,
     categories: string[],
@@ -27,12 +27,13 @@ export interface Product{
 }
 
 export const ProductSchema = new Schema({
+    id: String,
     price: Number,
     name: String,
     categories: [String],
     version: [{
         pictures: [{
-            _id: String,
+            id: String,
             ratio: {
                 x: Number, 
                 y: Number

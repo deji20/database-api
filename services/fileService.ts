@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import mime from "mime-types";
 import fs from "fs";
+import idService from "./idService";
 
 
 export default class FileService{
@@ -16,7 +17,7 @@ export default class FileService{
     }
 
     create(data: string, mimetype: string): string{
-        let id = new ObjectId();
+        let id = idService.increment("file");
         let path = `${this.directory}/${id.toString()}.${mime.extension(mimetype)}`; 
         
         if(mime.extension(mimetype)){
