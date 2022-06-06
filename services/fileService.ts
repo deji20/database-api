@@ -17,7 +17,7 @@ export default class FileService{
     }
 
     create(data: string, mimetype: string): string{
-        let id = idService.increment("file");
+        let id = await idService.increment("file");
         let path = `${this.directory}/${id.toString()}.${mime.extension(mimetype)}`; 
         
         if(mime.extension(mimetype)){
