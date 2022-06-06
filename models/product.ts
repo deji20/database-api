@@ -6,24 +6,24 @@ export interface Product{
     price: number,
     name: string,
     categories: string[],
-    version: {
-        pictures: {
-            id?: string,
-            ratio: {
-                x: number, 
-                y: number
-            }, 
-            path: string,
-            alt: string,
-            mime: string,
-        }[],
-        description: string,
-        attributes: {
-            name: string,
-            value: string,
-        }[],
-        amount: number,
-    }[]
+    version: Version[]
+}
+
+export interface Version
+{
+    pictures: {
+        id?: string,
+        ratio: {
+            x: number, 
+            y: number
+        }, 
+        path: string,
+        alt: string,
+        mime: string,
+    }[],
+    description: string,
+    attributes: {name: string, value: string}[],
+    amount: number,
 }
 
 export const ProductSchema = new Schema({

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { PictureDto } from "../models/models";
-import { ProductQuery, Product } from "../models/product";
+import { ProductQuery, Product, Version } from "../models/product";
 import { ProductRepository } from "../repositories/productRepository";
 import IdService from "./idService";
 import FileService from "./fileService";
@@ -29,14 +29,14 @@ export default class ProductService{
     }
 
     async create(product: Product): Promise<Product>{
-        product.version.forEach((ver) => {
-            ver.pictures.forEach(verPic => {
+        for(let ver of product.version){
+            for(let verPic of ver.pictures){
                 if(verPic.path.includes("data:image")){
                     verPic.path = verPic.path.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-                    verPic.path = this.fileService.create(verPic.path as unknown as string, verPic.mime)
+                    verPic.path = await this.fileService.create(verPic.path as unknown as string, verPic.mime)
                 }
-            })
-        });
+            }
+        };
 
         product.id = await IdService.increment("product", {
             prefix: product.name.split(" ").reduce((prev, cur) => prev += cur[0], "")
@@ -45,15 +45,14 @@ export default class ProductService{
     }
 
     async update(id: string, product: Product): Promise<Product>{
-        product.version.forEach((ver) => {
-            ver.pictures.forEach(verPic => {
+        for(let ver of product.version){
+            for(let verPic of ver.pictures){
                 if(verPic.path.includes("data:image")){
                     verPic.path = verPic.path.replace(/^data:image.*base64,/, "");
-                    console.log(verPic.path);
-                    verPic.path = this.fileService.create(verPic.path as unknown as string, verPic.mime)
+                    verPic.path = await this.fileService.create(verPic.path as unknown as string, verPic.mime)
                 }
-            })
-        });
+            }
+        };
         await this.repository.update(id, product as Product);
         return product;
     }

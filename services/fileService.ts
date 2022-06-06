@@ -16,7 +16,7 @@ export default class FileService{
           }
     }
 
-    create(data: string, mimetype: string): string{
+    async create(data: string, mimetype: string): Promise<string>{
         let id = await idService.increment("file");
         let path = `${this.directory}/${id.toString()}.${mime.extension(mimetype)}`; 
         
