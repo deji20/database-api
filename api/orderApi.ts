@@ -9,9 +9,6 @@ const orderService: OrderService = new OrderService();
 
 router.get("/", async (req, res) => {
     try{
-        const mail = new Mailer();
-        console.log(await mail.send());
-
         const orders = await orderService.get();
         res.send(orders);
     }catch(err){

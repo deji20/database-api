@@ -17,24 +17,10 @@ export default class Mailer{
         // });
     }
 
-    async send(){
+    async send(path: string){
         try{
-            console.log("before transport")
-            let transporter = nodemailer.createTransport({
-                host: config.email.host,
-                secure:false,
-                port: 2525,
-                auth: {
-                    user: config.email.user,
-                    pass: config.email.password, 
-                },
-            });
-
-            console.log("before verify")
-            console.log(await transporter.verify())
-
             console.log("before send mail")
-            let info = await transporter.sendMail({
+            let info = await this.transporter.sendMail({
                 from: 'deji <test@tester.com',
                 to: "migselv <jovan.v.santosh@gmail.com>",
                 subject: "Yo what up", 

@@ -11,6 +11,7 @@ import { CartRepository } from "../repositories/cartRepository";
 import { Cart } from "../models/cart";
 import { Customer } from "../models/customer";
 import IdService from "./idService";
+import Mailer from "./mailService";
 
 export default class PaymentService{
     private productRepo: ProductRepository;
@@ -38,7 +39,8 @@ export default class PaymentService{
 
         if(order && order.status == OrderStatus.NEW){
             order.status = OrderStatus.PAYED;
-            order.products
+            const mailer = new Mailer();
+            mailer.send("");
             order.products.forEach(async productLine => {
                 const product = await this.productRepo.getById(productLine.product.id)
                 product.version[0].amount -= productLine.amount;
