@@ -28,11 +28,11 @@ export class IdRepository{
     }
 
     async update(id: Id){
-       return await this.ids.updateOne({table: id.table}, id);
+        await this.ids.updateOne({table: id.table}, id);
     }
 
     async delete(id:Id){
-        return await this.ids.deleteOne({table: id.table});
+        await this.ids.deleteOne({table: id.table});
     }
 
     async create(id:Id){
