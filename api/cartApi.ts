@@ -1,9 +1,8 @@
 import express, { Router } from "express";
-import { Cart } from "../models/cart";
+
 import CartService from "../services/cartService";
 
 let router = express.Router();
-
 let cartService: CartService = new CartService();
 
 router.get("/:id", async (req, res) => {
