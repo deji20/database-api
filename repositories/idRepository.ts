@@ -24,7 +24,8 @@ export class IdRepository{
     }
 
     async get(table: string){
-        return await this.ids.findOne({table: table});
+        const id = await this.ids.findOne({table: table});
+        return id;
     }
 
     async update(id: Id){

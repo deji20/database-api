@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
         res.send({paymentId:result, checkoutId:config.payment.checkoutId})
     }catch(err){
         console.log(err);
-        res.status(500).send(err.ToString());
+        res.status(500).send(err.toString());
     }
 });
 

@@ -7,14 +7,14 @@ export default class Mailer{
     constructor(){
         // create reusable transporter object using the default SMTP transport
     
-        // this.transporter = nodemailer.createTransport({
-        //     host: config.email.host,
-        //     port: 587,
-        //     auth: {
-        //         user:  config.email.user,
-        //         pass: config.email.password, 
-        //     },
-        // });
+        this.transporter = nodemailer.createTransport({
+            host: config.email.host,
+            port: 587,
+            auth: {
+                user:  config.email.user,
+                pass: config.email.password, 
+            },
+        });
     }
 
     async send(path: string){
@@ -22,7 +22,7 @@ export default class Mailer{
             console.log("before send mail")
             let info = await this.transporter.sendMail({
                 from: 'deji <test@tester.com',
-                to: "migselv <jovan.v.santosh@gmail.com>",
+                to: "migselv <ehinlanwo.deji@gmail.com>",
                 subject: "Yo what up", 
                 text: "Virker det?",
             });

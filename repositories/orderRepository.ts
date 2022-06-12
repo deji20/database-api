@@ -16,7 +16,7 @@ export class OrderRepository{
     }
 
     async getById(id: string){
-        return await this.orders.findById(id);
+        return await this.orders.findOne({id: id});
     }
 
     async get(){
@@ -25,11 +25,11 @@ export class OrderRepository{
     }
 
     async delete(id: string){
-        await this.orders.findByIdAndDelete(id);
+        await this.orders.findOneAndDelete({id: id});
     }
 
     async update(id: string, order: Order){
-        const result = await this.orders.findByIdAndUpdate(id, order);
+        const result = await this.orders.findOneAndUpdate({id: id}, order);
         result.save()
         return result.toObject();
     }
