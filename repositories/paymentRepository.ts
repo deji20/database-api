@@ -31,16 +31,18 @@ export default class PaymentRepository{
         //transform products into nets parsable items
         const items = order.products.map((line) => {
             const taxRate = 2000;
+            const unitPrice = line.product.price * 100
+            const totalPrice = unitPrice * line.amount;
             return {
                 reference: line.product.name,
                 name: line.product.name,
                 quantity: line.amount,
                 unit: "Pcs",
-                unitPrice: line.product.price,
+                unitPrice: unitPrice,
                 taxRate: taxRate,
-                taxAmount: (line.product.price * line.amount * taxRate / 10000),
-                grossTotalAmount: (line.product.price * line.amount) + (line.product.price * line.amount * taxRate / 10000),
-                netTotalAmount: line.product.price * line.amount,
+                taxAmount: (totalPrice * taxRate / 10000),
+                grossTotalAmount: totalPrice + (totalPrice * taxRate / 10000),
+                netTotalAmount: totalPrice,
             }
         });
 
