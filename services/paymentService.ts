@@ -50,7 +50,7 @@ export default class PaymentService{
                 order.customer.email
             ));
             mailer.addBody("<p>hello<p>")
-            mailer.send();
+            await mailer.send();
 
             //update product amounts
             order.products.forEach(async productLine => {
