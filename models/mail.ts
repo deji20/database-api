@@ -6,12 +6,7 @@ export default interface Mail{
     to: MailRecipient[];
 }
 
-export class MailRecipient{
+export interface MailRecipient{
     name: string;
     address: string;
-
-    constructor(name: string, address: string){
-        this.name;
-        this.address;
-    }
 }

@@ -44,11 +44,11 @@ export default class PaymentService{
             order.status = OrderStatus.PAYED;
 
             //send order confirmed mail
-            const mailer = new Mailer("Order Confirmed", new MailRecipient("Det Indiske Hjørne", "kontakt@indiskehjoerne.dk"));
-            mailer.addRecipient(new MailRecipient(
-                order.customer.privatePerson.firstName + " " + order.customer.privatePerson.lastName, 
-                order.customer.email
-            ));
+            const mailer = new Mailer("Order Confirmed", { name:"Det Indiske Hjørne", address: "kontakt@indiskehjoerne.dk"});
+            mailer.addRecipient({
+                name: order.customer.privatePerson.firstName + " " + order.customer.privatePerson.lastName, 
+                address: order.customer.email
+            });
             mailer.addBody("<p>hello<p>")
             await mailer.send();
 
