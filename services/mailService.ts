@@ -1,6 +1,8 @@
 import nodemailer, { Transporter } from "nodemailer";
 import config from "../config";
 import Mail, { MailRecipient } from "../models/mail";
+import file from "fs";
+import filePath from "path";
 
 export default class Mailer{
     transporter: Transporter;
@@ -27,15 +29,15 @@ export default class Mailer{
 
     addRecipient = (recipient: MailRecipient) => this.mail.to = [...this.mail.to, recipient];
     addBody = (body: string) => this.mail.body = body;
+    addBodyDocument = (path: string) => this.mail.body = filePath.isAbsolute(path) ? file.readFileSync(filePath.join(__dirname, "..", path), "utf8") : file.readFileSync(filePath.join(__dirname, "../mails", path), "utf8");
 
     async send(){
         try{
-            console.log(this.mail.to.reduce((prev, mail, index) => prev += `${index && ","} ${mail.name} <${mail.address}>`, ""));
             let info = await this.transporter.sendMail({
                 from: `${this.mail.from.name} <${this.mail.from.address}>`,
                 to: this.mail.to.reduce((prev, mail, index) => prev += `${index && ","} ${mail.name} <${mail.address}>`, ""),
                 subject: this.mail.subject, 
-                text: this.mail.body,
+                html: this.mail.body,
             });
             console.log(info);
         }catch(exc){

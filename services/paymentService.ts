@@ -49,7 +49,7 @@ export default class PaymentService{
                 name: order.customer.privatePerson.firstName + " " + order.customer.privatePerson.lastName, 
                 address: order.customer.email
             });
-            mailer.addBody("<p>hello<p>")
+            mailer.addBodyDocument("orderConfirmed.html");
             await mailer.send();
 
             //update product amounts
