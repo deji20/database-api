@@ -29,18 +29,18 @@ export default class ProductService{
     }
 
     async create(product: Product): Promise<Product>{
+        product.id = await IdService.increment("product", {
+            prefix: product.name.split(" ").reduce((prev, cur) => prev += cur[0], "")
+        });
+
         for(let ver of product.version){
             for(let verPic of ver.pictures){
                 if(verPic.path.includes("data:image")){
                     verPic.path = verPic.path.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-                    verPic.path = await this.fileService.create(verPic.path as unknown as string, verPic.mime)
+                    verPic.path = await this.fileService.create(verPic.path as unknown as string, verPic.mime, product.id)
                 }
             }
         };
-
-        product.id = await IdService.increment("product", {
-            prefix: product.name.split(" ").reduce((prev, cur) => prev += cur[0], "")
-        });
         return await this.repository.create(product);
     }
 
