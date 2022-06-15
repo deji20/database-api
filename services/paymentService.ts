@@ -12,6 +12,8 @@ import { Cart } from "../models/cart";
 import { Customer } from "../models/customer";
 import IdService from "./idService";
 import Mailer from "./mailService";
+import Mail from "nodemailer/lib/mailer";
+import { MailRecipient } from "../models/mail";
 
 export default class PaymentService{
     private productRepo: ProductRepository;
@@ -38,9 +40,19 @@ export default class PaymentService{
         // update order status and track product inventory
 
         if(order && order.status == OrderStatus.NEW){
+            //change status of the order
             order.status = OrderStatus.PAYED;
-            const mailer = new Mailer();
-            mailer.send("");
+
+            //send order confirmed mail
+            const mailer = new Mailer("Order Confirmed", new MailRecipient("Det Indiske Hjørne", "kontakt@indiskehjoerne.dk"));
+            mailer.addRecipient(new MailRecipient(
+                order.customer.privatePerson.firstName + " " + order.customer.privatePerson.lastName, 
+                order.customer.email
+            ));
+            mailer.addBody("<p>hello<p>")
+            mailer.send();
+
+            //update product amounts
             order.products.forEach(async productLine => {
                 const product = await this.productRepo.getById(productLine.product.id)
                 product.version[0].amount -= productLine.amount;

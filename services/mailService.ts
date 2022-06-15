@@ -1,12 +1,15 @@
 import nodemailer, { Transporter } from "nodemailer";
 import config from "../config";
+import Mail, { MailRecipient } from "../models/mail";
 
 export default class Mailer{
     transporter: Transporter;
-    
-    constructor(){
+    mail: Mail;
+
+    constructor(subject: string, sender: MailRecipient){
+        this.mail.subject = subject;
+        this.mail.from = sender;
         // create reusable transporter object using the default SMTP transport
-    
         this.transporter = nodemailer.createTransport({
             host: config.email.host,
             port: 587,
@@ -17,17 +20,17 @@ export default class Mailer{
         });
     }
 
-    async send(path: string){
-        try{
-            console.log("before send mail")
-            let info = await this.transporter.sendMail({
-                from: 'deji <test@tester.com',
-                to: "migselv <ehinlanwo.deji@gmail.com>",
-                subject: "Yo what up", 
-                text: "Virker det?",
-            });
+    addRecipient = (recipient: MailRecipient) => this.mail.to = [...this.mail.to, recipient];
+    addBody = (body: string) => this.mail.body = body;
 
-            console.log("after send")
+    async send(){
+        try{
+            let info = await this.transporter.sendMail({
+                from: `${this.mail.from.name} <${this.mail.from.address}>`,
+                to: this.mail.to.reduce((prev, mail, index) => prev += `${index && ","} ${mail.name} <${mail.address}>`, ""),
+                subject: this.mail.subject, 
+                text: this.mail.body,
+            });
             console.log(info);
         }catch(exc){
             console.log(exc);
