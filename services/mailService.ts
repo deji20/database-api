@@ -7,8 +7,13 @@ export default class Mailer{
     mail: Mail;
 
     constructor(subject: string, sender: MailRecipient){
-        this.mail.subject = subject;
-        this.mail.from = sender;
+        this.mail = {
+            subject: subject,
+            from: sender,
+            to: [],
+            body: null
+        }
+
         // create reusable transporter object using the default SMTP transport
         this.transporter = nodemailer.createTransport({
             host: config.email.host,
