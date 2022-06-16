@@ -20,7 +20,9 @@ export interface OrderLine{
 export enum OrderStatus{
     NEW = "new",
     PAYED = "payed",
+    CANCELLED = "cancelled",
     SHIPPED = "shipped"
+
 
 }
 
