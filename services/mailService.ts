@@ -35,7 +35,7 @@ export default class Mailer{
         try{
             let info = await this.transporter.sendMail({
                 from: `${this.mail.from.name} <${this.mail.from.address}>`,
-                to: this.mail.to.reduce((prev, mail, index) => prev += `${index && ","} ${mail.name} <${mail.address}>`, ""),
+                to: this.mail.to.reduce((prev, mail, index) => prev += `${mail.name} <${mail.address}>`, ""),
                 subject: this.mail.subject, 
                 html: this.mail.body,
             });
