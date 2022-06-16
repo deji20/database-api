@@ -29,7 +29,9 @@ router.get("/:id", async (req, res) => {
 router.patch("/:id", async (req, res) => {
     try{
         const newOrder = req.body.order as Order
+        console.log("before update", newOrder)
         const order = await orderService.update(req.params.id, newOrder);
+        console.log("after update", order)
         res.send(order);
     }catch(err){
         res.status(400).send(err);
