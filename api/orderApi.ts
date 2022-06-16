@@ -26,6 +26,16 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+router.patch("/:id", async (req, res) => {
+    try{
+        const newOrder = req.body.order as Order
+        const order = await orderService.update(req.params.id, newOrder);
+        res.send(order);
+    }catch(err){
+        res.status(400).send(err);
+    }
+});
+
 router.delete("/:id", async (req, res) => {
     await orderService.delete(req.params.id);
     res.status(204).send()
