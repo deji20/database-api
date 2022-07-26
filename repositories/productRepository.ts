@@ -18,8 +18,17 @@ export class ProductRepository{
         return this.products.distinct("categories", query.search);
     }
     async get(query: ProductQuery){
-        if(query.projection) return await this.products.find({...query.search, ...query.filter}).select(query.projection);
-        return await this.products.find({...query.search, ...query.filter});
+        if(query.projection) {
+            return await this.products
+                .find({...query.search, ...query.filter})
+                .select(query.projection)
+                .limit(query.pagination?.amount)
+                .skip(query.pagination?.offset);
+        }
+        return await this.products
+            .find({...query.search, ...query.filter})
+            .limit(query.pagination?.amount)
+            .skip(query.pagination?.offset);
     }
 
     async create(product: Product){

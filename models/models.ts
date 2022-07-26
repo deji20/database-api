@@ -12,5 +12,10 @@ export interface Query{
     filter: object; 
     projection: object;
     search: object;
+    pagination: {
+        amount: number, 
+        offset: number
+    }
 }
+
 export interface CategoryQuery extends Query{}

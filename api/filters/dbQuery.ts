@@ -9,7 +9,16 @@ router.use( async (req, res, next) => {
             filter: null,
             projection: null,
             search: null,
+            pagination: null,
         }; 
+
+        if(req.query.pagination && typeof req.query.pagination === "string"){
+            let fields = req.query.pagination
+                .split(",")
+                .filter(field => !isNaN(Number.parseInt(field)))
+                .map((field) => Number.parseInt(field));
+            if(fields[0]) dbQuery.pagination = {amount: fields[0], offset: fields[1]};
+        }
 
         if(req.query.projection && typeof req.query.projection === "string"){
             dbQuery.projection = {};
