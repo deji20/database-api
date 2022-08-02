@@ -5,6 +5,9 @@ import PaymentRepository from "../repositories/paymentRepository";
 import OrderService from "../services/orderService";
 import PaymentService from "../services/paymentService";
 
+import DocumentBuilder from "../services/documentBuilder";
+import fs from "fs";
+
 let router = express.Router();
 
 let paymentService = new PaymentService();
@@ -20,9 +23,18 @@ router.get("/", async (req, res) => {
 
 router.post("/confirm", async (req, res) => {
     const paymentId = req.body?.data?.paymentId;
-    !paymentId && res.status(400).send() 
+    console.log(req.body);
+    !paymentId && res.status(404).send("payment id not found") 
     paymentService.confirmPayment(paymentId);
     res.status(200).send();
+})
+
+router.get("/test", async (req, res) => {
+    fs.readFile(process.env.BASE_DIR + "/mails/orderConfirmed.html", "utf-8", (err, text) => {
+        console.log(text);
+    })
+    res.status(200).send()
+    //const builder = new DocumentBuilder();
 })
 
 router.post("/", async (req, res) => {
